@@ -177,6 +177,7 @@ class FetchDataCommand extends ContainerAwareCommand
     private function buildXpath($xpath, $namespace)
     {
         $xpath = str_replace('[@', '[@' . $namespace . ':', $xpath);
+        $xpath = str_replace(' or @', ' or @' . $namespace . ':', $xpath);
         $xpath = preg_replace('/\[([^@])/', '[' . $namespace . ':${1}', $xpath);
         $xpath = preg_replace('/\/([^\/])/', '/' . $namespace . ':${1}', $xpath);
         if(strpos($xpath, '/') !== 0) {
@@ -317,9 +318,11 @@ class FetchDataCommand extends ContainerAwareCommand
                                 $data = $record->getData();
                                 $remove = true;
                                 if (array_key_exists($field, $data)) {
-                                    if(count($data[$field]) > 0) {
-                                        $fields[$value['class']][$field][] = $record->getId();
-                                        $remove = false;
+                                    if($data[$field] != null) {
+                                        if(count($data[$field]) > 0) {
+                                            $fields[$value['class']][$field][] = $record->getId();
+                                            $remove = false;
+                                        }
                                     }
                                 }
                                 if($remove) {
@@ -342,43 +345,47 @@ class FetchDataCommand extends ContainerAwareCommand
                                     $data = $record->getData();
                                     $remove = true;
                                     if (array_key_exists($field, $data)) {
-                                        if(count($data[$field]) > 0) {
-                                            $idAdded = false;
-                                            foreach ($data[$field] as $fieldData) {
-                                                if (array_key_exists($subField, $fieldData)) {
-                                                    if (count($fieldData[$subField]) > 0) {
-                                                        if(!$idAdded) {
-                                                            $fields[$v['class']][$field . '/' . $subField][] = $record->getId();
-                                                            $idAdded = true;
-                                                        }
-                                                        $remove = false;
-
-                                                        if ($subField === 'id') {
-                                                            // Consider record incomplete unless there is a purl id
-                                                            $remove = true;
-                                                            foreach ($fieldData[$subField] as $id) {
-                                                                if ($id['type'] === 'purl') {
-                                                                    $remove = false;
-                                                                    break;
+                                        if($data[$field] != null) {
+                                            if(count($data[$field]) > 0) {
+                                                $idAdded = false;
+                                                foreach ($data[$field] as $fieldData) {
+                                                    if (array_key_exists($subField, $fieldData)) {
+                                                        if($fieldData[$subField] != null) {
+                                                            if (count($fieldData[$subField]) > 0) {
+                                                                if(!$idAdded) {
+                                                                    $fields[$v['class']][$field . '/' . $subField][] = $record->getId();
+                                                                    $idAdded = true;
                                                                 }
-                                                            }
-                                                        }
+                                                                $remove = false;
 
-                                                        // Link terms with purl id's
-                                                        if ($subField === 'term' && array_key_exists($field, $termIds)) {
-                                                            $term = RecordUtil::getPreferredTerm($fieldData[$subField]);
-                                                            if ($term && array_key_exists('id', $fieldData)) {
-                                                                if (is_array($fieldData['id'])) {
-                                                                    if (count($fieldData['id']) > 0 && !array_key_exists($term, $termIds[$field])) {
-                                                                        $firstPurlId = null;
-                                                                        foreach ($fieldData['id'] as $termId) {
-                                                                            if ($termId['type'] === 'purl') {
-                                                                                $firstPurlId = $termId['id'];
-                                                                                break;
-                                                                            }
+                                                                if ($subField === 'id') {
+                                                                    // Consider record incomplete unless there is a purl id
+                                                                    $remove = true;
+                                                                    foreach ($fieldData[$subField] as $id) {
+                                                                        if ($id['type'] === 'purl') {
+                                                                            $remove = false;
+                                                                            break;
                                                                         }
-                                                                        if ($firstPurlId != null) {
-                                                                            $termIds[$field][$term] = $firstPurlId;
+                                                                    }
+                                                                }
+
+                                                                // Link terms with purl id's
+                                                                if ($subField === 'term' && array_key_exists($field, $termIds)) {
+                                                                    $term = RecordUtil::getPreferredTerm($fieldData[$subField]);
+                                                                    if ($term && array_key_exists('id', $fieldData)) {
+                                                                        if (is_array($fieldData['id'])) {
+                                                                            if (count($fieldData['id']) > 0 && !array_key_exists($term, $termIds[$field])) {
+                                                                                $firstPurlId = null;
+                                                                                foreach ($fieldData['id'] as $termId) {
+                                                                                    if ($termId['type'] === 'purl') {
+                                                                                        $firstPurlId = $termId['id'];
+                                                                                        break;
+                                                                                    }
+                                                                                }
+                                                                                if ($firstPurlId != null) {
+                                                                                    $termIds[$field][$term] = $firstPurlId;
+                                                                                }
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
