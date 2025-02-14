@@ -1,20 +1,13 @@
-/.web-server-pid
-/.idea/
-/app/config/parameters.yml
-/app/config/.fuse_hidden*
-/build/
-/node_modules/
-/phpunit.xml
-/var/*
-!/var/cache
-/var/cache/*
-!var/cache/.gitkeep
-!/var/logs
-/var/logs/*
-!var/logs/.gitkeep
-!/var/sessions
-/var/sessions/*
-!var/sessions/.gitkeep
-!var/SymfonyRequirements.php
+
+###> symfony/framework-bundle ###
+/.env
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
 /vendor/
-/web/build/*
+###< symfony/framework-bundle ###
+/node_modules/
+/.idea/

@@ -1,0 +1,10 @@
+parameters:
+    service_name: '%env(APP_NAME)%'
+    # The default locale (language) of the application (available locales: en|nl)
+    locale: '%env(APP_LOCALE)%'
+    # Email address where the admin of the application can be reached
+    service_address: '%env(APP_EMAIL)%'
+    # URL of the OAI-PMH endpoint for metadata harvesting
+    datahub_url: '%env(DATAHUB_URL)%'
+    # A secret key that's used to generate certain security-related tokens
+    secret: '%env(APP_SECRET)%'

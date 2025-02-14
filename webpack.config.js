@@ -1,25 +1,26 @@
-var Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore');
 
 Encore
-// the project directory where compiled assets will be stored
-    .setOutputPath('web/build/')
-    // the public path used by the web server to access the previous directory
+    // Stel de directory in waar de gegenereerde assets worden opgeslagen
+    .setOutputPath('public/build/')
+    // Stel het openbare pad in waarmee de server toegang heeft tot deze bestanden
     .setPublicPath('/build')
     .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
-    // uncomment to create hashed filenames (e.g. app.abc123.css)
-    // .enableVersioning(Encore.isProduction())
 
-    // uncomment to define the assets of the project
-    .addEntry('js/app', './assets/js/app.js')
-    .addStyleEntry('css/app', './assets/css/app.scss')
+    // Activeer versienummers voor caching in productie
+    .enableVersioning(Encore.isProduction())
 
-    // uncomment if you use Sass/SCSS files
-    .enableSassLoader(function(sassOptions) {}, {
-        resolveUrlLoader: false
-    })
-// uncomment for legacy applications that require $/jQuery as a global variable
+    // Definieer de assets van het project
+    .addEntry('app', './assets/js/app.js')
+    .addStyleEntry('app_css', './assets/css/app.scss')
+
+    // Activeer Sass/SCSS
+    .enableSassLoader()
+
+    // Zorg ervoor dat jQuery correct wordt geladen als globale variabele
     .autoProvidejQuery()
+    .enableSingleRuntimeChunk()
 ;
 
 module.exports = Encore.getWebpackConfig();
