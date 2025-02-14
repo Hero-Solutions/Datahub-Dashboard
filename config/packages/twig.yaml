@@ -1,7 +1,9 @@
 twig:
     file_name_pattern: '*.twig'
     globals:
+        locales: '%app.locales%'
         service_name: '%service_name%'
+        service_address: '%service_address%'
 
 when@test:
     twig:
