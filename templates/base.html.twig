@@ -8,7 +8,8 @@
         {% endblock %}
     </title>
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app_css') }}
+            {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
     {% endblock %}
@@ -62,7 +63,8 @@
 </div>
 {% include "footer.html.twig" %}
 {% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
+            {{ encore_entry_script_tags('app') }}
+    <script src="{{ asset('build/js/app.js') }}"></script>
     {% for locale in locales %}
         <p>{{ locale }}</p>
     {% endfor %}
