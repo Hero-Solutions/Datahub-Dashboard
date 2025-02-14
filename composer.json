@@ -10,6 +10,7 @@
         "ext-mongodb": "*",
         "caseyamcl/phpoaipmh": "^3.3",
         "doctrine/mongodb-odm-bundle": "*",
+        "symfony/asset": "7.1.*",
         "symfony/console": "7.1.*",
         "symfony/dotenv": "7.1.*",
         "symfony/flex": "^2",
