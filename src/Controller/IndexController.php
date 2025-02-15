@@ -13,20 +13,18 @@ class IndexController extends AbstractController
 {
     private DocumentManager $documentManager;
     private TranslatorInterface $translator;
-    private string $locales;
 
     public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, string $locales)
     {
         $this->documentManager = $documentManager;
         $this->translator = $translator;
-        $this->locales = $locales;
     }
 
     private function getBasicData(string $currentPage, Request $request): array
     {
         $translatedRoutes = [];
 
-        foreach (explode('|', $this->locales) as $locale) {
+        foreach (explode('|', $this->getParameter('app.locales')) as $locale) {
             $translatedRoutes[] = [
                 'locale' => $locale,
                 'route' => $this->generateUrl($currentPage, ['_locale' => $locale]),
