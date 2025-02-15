@@ -14,7 +14,7 @@ class IndexController extends AbstractController
     private DocumentManager $documentManager;
     private TranslatorInterface $translator;
 
-    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, string $locales)
+    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator)
     {
         $this->documentManager = $documentManager;
         $this->translator = $translator;
