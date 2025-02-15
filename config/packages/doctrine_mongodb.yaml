@@ -7,7 +7,7 @@ doctrine_mongodb:
             options:
                 username: '%env(MONGODB_USER)%'
                 password: '%env(MONGODB_PASSWORD)%'
-                authSource: admin
+                authSource: '%env(MONGODB_DB)%'
     default_database: '%env(MONGODB_DB)%'
     document_managers:
         default:
