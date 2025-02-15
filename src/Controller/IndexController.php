@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Document\Provider;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,26 +21,26 @@ class IndexController extends AbstractController
         $this->translator = $translator;
     }
 
-    private function getBasicData(string $currentPage, Request $request): array
+    private function getBasicData(string $currentPage, Request $request)
     {
-        $translatedRoutes = [];
-
-        foreach (explode('|', $this->getParameter('app.locales')) as $locale) {
-            $translatedRoutes[] = [
-                'locale' => $locale,
-                'route' => $this->generateUrl($currentPage, ['_locale' => $locale]),
-                'active' => $locale === $request->getLocale(),
-            ];
+        $translatedRoutes = array();
+        foreach(explode('|', $this->getParameter('app.locales')) as $locale) {
+            $translatedRoute = array(
+                'locale'=> $locale,
+                'route' => $this->generateUrl($currentPage, array('_locale' => $locale))
+            );
+            if($locale === $request->getLocale()) {
+                $translatedRoute['active'] = true;
+            }
+            $translatedRoutes[] = $translatedRoute;
         }
-
-        $providers = $this->documentManager->getRepository(\App\Document\Provider::class)->findAll();
-
-        return [
+        $providers = $this->documentManager->getRepository(Provider::class)->findAll();
+        return array(
             'current_page' => $currentPage,
-            'translated_routes' => $translatedRoutes,
+            'translated_routes'=> $translatedRoutes,
             'provider_name' => $this->translator->trans('choose_provider'),
-            'providers' => $providers,
-        ];
+            'providers' => $providers
+        );
     }
 
     #[Route('/', name: 'home_default')]
