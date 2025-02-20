@@ -226,10 +226,7 @@ class FetchDataCommand extends Command
             }
         }
 
-        $provider = new Provider();
-        $provider->setIdentifier($providerId);
-        $provider->setName($providerName);
-        $providers[] = $provider;
+        $providers[] = new Provider($providerId, $providerName);
         if($verbose) {
             echo 'Provider added: ' . $providerName . PHP_EOL;
         }
