@@ -357,6 +357,12 @@ h1 {
   }
 }
 
+.dropdown-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .dropdown-toggle:focus,
 .parameter:focus,
 .question:focus,
