@@ -518,6 +518,17 @@ button:focus {
   margin-bottom: -1px;
 }
 
+.left-menu .card {
+  border: none;
+}
+
+.left-menu .card .card-header,
+.left-menu .card .card-body {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
 .parameter, .parameter:focus {
   background-color: $color5;
   border-color: $color7;
