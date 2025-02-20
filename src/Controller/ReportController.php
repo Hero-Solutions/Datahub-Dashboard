@@ -2,7 +2,12 @@
 
 namespace App\Controller;
 
+use App\Document\CompletenessReport;
+use App\Document\CompletenessTrend;
+use App\Document\FieldReport;
+use App\Document\FieldTrend;
 use App\Document\Provider;
+use App\Document\Record;
 use App\Entity\Graph;
 use App\Entity\Report;
 use App\Util\RecordUtil;
@@ -130,7 +135,7 @@ class ReportController extends AbstractController
         // Clear the document manager cache, otherwise it will just return old results with the wrong data
         $this->documentManager->clear();
 
-        $qb = $this->documentManager->createQueryBuilder('RecordBundle:Record')
+        $qb = $this->documentManager->createQueryBuilder(Record::class)
             ->field('provider')->equals($this->provider)
             ->select('data.' . str_replace('/', '.', $field));
         $query = $qb->getQuery();
@@ -192,7 +197,7 @@ class ReportController extends AbstractController
 
     private function generateCompletenessTrendGraph($isMinimum, $isBasic, $header)
     {
-        $trend = $this->getTrend('ReportBundle:CompletenessTrend');
+        $trend = $this->getTrend(CompletenessTrend::class);
 
         $lineChartData = 'date,value';
         foreach($trend as $dataPoint) {
@@ -208,7 +213,7 @@ class ReportController extends AbstractController
 
     private function generateFieldTrendGraph($type, $header)
     {
-        $trend = $this->getTrend('ReportBundle:FieldTrend');
+        $trend = $this->getTrend(FieldTrend::class);
 
         $lineChartData = 'date,value';
         foreach($trend as $dataPoint) {
@@ -219,7 +224,7 @@ class ReportController extends AbstractController
 
     private function fieldOverview($isMinimum, $isBasic, $isExtended, $title, $description)
     {
-        $reports = $this->documentManager->getRepository('ReportBundle:FieldReport')->findBy(array('provider' => $this->provider));
+        $reports = $this->documentManager->getRepository(FieldReport::class)->findBy(array('provider' => $this->provider));
         $csvData = '';
         $total = 0;
         if($reports) {
@@ -272,7 +277,7 @@ class ReportController extends AbstractController
 
     private function fullRecords($isBasic, $isMinimum, $title, $description)
     {
-        $reports = $this->documentManager->getRepository('ReportBundle:CompletenessReport')->findBy(array('provider' => $this->provider));
+        $reports = $this->documentManager->getRepository(CompletenessReport::class)->findBy(array('provider' => $this->provider));
         $done = 0;
         $total = 0;
         if($reports && count($reports) > 0) {
@@ -960,7 +965,7 @@ class ReportController extends AbstractController
 
     private function generateOpennessTrendGraph($isRightsWork, $isRightsDigitalRepresentation, $isRightsData, $header)
     {
-        $trend = $this->getTrend('ReportBundle:CompletenessTrend');
+        $trend = $this->getTrend(CompletenessTrend::class);
 
         $lineChartData = 'date,value';
         foreach($trend as $dataPoint) {
@@ -978,7 +983,7 @@ class ReportController extends AbstractController
 
     private function opennessRecs($isRightsWork, $isRightsDigitalRepresentation, $isRightsData, $title, $description)
     {
-        $reports = $this->documentManager->getRepository('ReportBundle:CompletenessReport')->findBy(array('provider' => $this->provider));
+        $reports = $this->documentManager->getRepository(CompletenessReport::class)->findBy(array('provider' => $this->provider));
         $done = 0;
         $total = 0;
         if($reports && count($reports) > 0) {

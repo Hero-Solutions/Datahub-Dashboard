@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Document\Record;
 use App\Util\RecordUtil;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -110,7 +111,7 @@ class DownloadController extends AbstractController
 
     private function getAllRecords($field)
     {
-        $qb = $this->documentManager->createQueryBuilder('RecordBundle:Record')->field('provider')->equals($this->provider)->select('data.' . str_replace('/', '.', $field));
+        $qb = $this->documentManager->createQueryBuilder(Record::class)->field('provider')->equals($this->provider)->select('data.' . str_replace('/', '.', $field));
         $query = $qb->getQuery();
         $data = $query->execute();
         return $data;
@@ -118,7 +119,7 @@ class DownloadController extends AbstractController
 
     private function getAllRecordsWithIds($field)
     {
-        $qb = $this->documentManager->createQueryBuilder('RecordBundle:Record')->field('provider')->equals($this->provider)->select('data.' . str_replace('/', '.', $field), 'data.application_id', 'data.object_number');
+        $qb = $this->documentManager->createQueryBuilder(Record::class)->field('provider')->equals($this->provider)->select('data.' . str_replace('/', '.', $field), 'data.application_id', 'data.object_number');
         $query = $qb->getQuery();
         $data = $query->execute();
         return $data;
@@ -184,7 +185,7 @@ class DownloadController extends AbstractController
             }
         }
 
-        usort($csvArray, array('AppBundle\Controller\DownloadController', 'fieldOverviewCmp'));
+        usort($csvArray, array('App\Controller\DownloadController', 'fieldOverviewCmp'));
 
         $csvData = '';
         foreach($csvArray as $csvLine) {
@@ -265,7 +266,7 @@ class DownloadController extends AbstractController
                 $recordIds = $this->getRecordIds($data);
                 $csvArray[] = array('app_id' => $recordIds[0], 'obj_number' => $recordIds[1], 'id' => $id, 'count' => $count);
             }
-            usort($csvArray, array('AppBundle\Controller\DownloadController', 'ambigIdsCmp'));
+            usort($csvArray, array('App\Controller\DownloadController', 'ambigIdsCmp'));
         }
 
         $csvData = '';
@@ -398,7 +399,7 @@ class DownloadController extends AbstractController
             }
         }
 
-        uasort($termsWithId, array('AppBundle\Controller\DownloadController', 'ambigTermPieCmp'));
+        uasort($termsWithId, array('App\Controller\DownloadController', 'ambigTermPieCmp'));
 
         $csvData = '';
         foreach($termsWithoutId as $term => $id) {
@@ -540,7 +541,7 @@ class DownloadController extends AbstractController
                     'count' => count($idTerms[$termId['id']])*1000000 + count($ids));//hack to sort based on duplicate ID's, then on duplicate terms
             }
         }
-        usort($initCsvData, array('AppBundle\Controller\DownloadController', 'ambigIdsCmp'));
+        usort($initCsvData, array('App\Controller\DownloadController', 'ambigIdsCmp'));
 
         $csvData = '';
         foreach($termsWithoutId as $term => $termId) {

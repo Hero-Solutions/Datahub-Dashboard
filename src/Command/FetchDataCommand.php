@@ -77,7 +77,7 @@ class FetchDataCommand extends Command
             $recs = $myEndpoint->listRecords($metadataPrefix);
 
             // Remove all current data in the local database
-            $this->documentManager->getDocumentCollection('RecordBundle:Record')->deleteMany([]);
+            $this->documentManager->getDocumentCollection(Record::class)->deleteMany([]);
 
             $providers = array();
             $recordIds = array();
@@ -239,7 +239,7 @@ class FetchDataCommand extends Command
 
     private function storeProviders($providers)
     {
-        $this->documentManager->getDocumentCollection('ProviderBundle:Provider')->deleteMany([]);
+        $this->documentManager->getDocumentCollection(Provider::class)->deleteMany([]);
         foreach($providers as $provider) {
             $this->documentManager->persist($provider);
         }
@@ -286,8 +286,8 @@ class FetchDataCommand extends Command
 
     private function generateAndStoreReport($dataDef, $providers, $recordIds)
     {
-        $this->documentManager->getDocumentCollection('ReportBundle:CompletenessReport')->remove([]);
-        $this->documentManager->getDocumentCollection('ReportBundle:FieldReport')->remove([]);
+        $this->documentManager->getDocumentCollection(CompletenessReport::class)->remove([]);
+        $this->documentManager->getDocumentCollection(FieldReport::class)->remove([]);
         $this->documentManager->flush();
         $this->documentManager->clear();
 
