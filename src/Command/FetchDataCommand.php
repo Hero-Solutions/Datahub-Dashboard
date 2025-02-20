@@ -9,6 +9,7 @@ use App\Document\FieldReport;
 use App\Document\FieldTrend;
 use App\Util\RecordUtil;
 use DateTime;
+use DateTimeImmutable;
 use Phpoaipmh\Endpoint;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -415,8 +416,7 @@ class FetchDataCommand extends Command
                 }
             }
 
-            $completenessReport = new CompletenessReport();
-            $completenessReport->setProvider($providerId);
+            $completenessReport = new CompletenessReport($providerId);
             $completenessReport->setTotal(count($recordIds[$providerId]));
             $completenessReport->setMinimum(count($complete['minimum']));
             $completenessReport->setBasic(count($complete['basic']));
@@ -425,9 +425,8 @@ class FetchDataCommand extends Command
             $completenessReport->setRightsDigitalRepresentation(count($complete['rights_digital_representation']));
             $this->documentManager->persist($completenessReport);
 
-            $completenessTrend = new CompletenessTrend();
-            $completenessTrend->setProvider($providerId);
-            $completenessTrend->setTimestamp(new MongoDate());
+            $completenessTrend = new CompletenessTrend($providerId);
+            $completenessTrend->setTimestamp(new DateTimeImmutable());
             $completenessTrend->setTotal($completenessReport->getTotal());
             $completenessTrend->setMinimum($completenessReport->getMinimum());
             $completenessTrend->setBasic($completenessReport->getBasic());
@@ -436,9 +435,8 @@ class FetchDataCommand extends Command
             $completenessTrend->setRightsData($completenessReport->getRightsData());
             $this->documentManager->persist($completenessTrend);
 
-            $fieldReport = new FieldReport();
+            $fieldReport = new FieldReport($providerId);
             $fieldReport->setTotal($completenessReport->getTotal());
-            $fieldReport->setProvider($providerId);
             $fieldReport->setMinimum($fields['minimum']);
             $fieldReport->setBasic($fields['basic']);
             $fieldReport->setExtended($fields['extended']);
