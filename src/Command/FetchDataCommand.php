@@ -446,10 +446,7 @@ class FetchDataCommand extends Command
             foreach($termIds as $field => $terms) {
                 $termsWithIds[$field] = count($terms);
             }
-            $fieldTrend = new FieldTrend();
-            $fieldTrend->setProvider($providerId);
-            $fieldTrend->setTimestamp(new DateTime());
-            $fieldTrend->setCounts($termsWithIds);
+            $fieldTrend = new FieldTrend($providerId, new DateTimeImmutable(), $termsWithIds);
             $this->documentManager->persist($fieldTrend);
 
             $this->documentManager->flush();
