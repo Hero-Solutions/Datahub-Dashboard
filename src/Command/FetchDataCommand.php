@@ -8,7 +8,6 @@ use App\Document\CompletenessTrend;
 use App\Document\FieldReport;
 use App\Document\FieldTrend;
 use App\Util\RecordUtil;
-use DateTime;
 use DateTimeImmutable;
 use Phpoaipmh\Endpoint;
 use Doctrine\ODM\MongoDB\DocumentManager;

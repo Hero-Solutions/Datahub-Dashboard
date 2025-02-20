@@ -199,13 +199,18 @@ class ReportController extends AbstractController
 
         $curTime = new UTCDateTime();
         $curTs = $curTime->toDateTime()->getTimestamp() * 1000;
-        $trend = $this->documentManager->getRepository($repository)->findBy(array(
-            'provider' => $this->provider,
-            "timestamp" => array('$lte' => new UTCDateTime(), '$gte' => new UTCDateTime($curTs - $maxMonths * 30 * 24 * 3600 * 1000))
-        ));
 
-        return $trend;
+        $startTime = new UTCDateTime($curTs - $maxMonths * 30 * 24 * 3600 * 1000);
+
+        return $this->documentManager->getRepository($repository)->findBy([
+            'provider' => $this->provider,
+            'timestamp' => [
+                '$lte' => $curTime,
+                '$gte' => $startTime
+            ]
+        ]);
     }
+
 
     private function generateCompletenessTrendGraph($isMinimum, $isBasic, $header)
     {
