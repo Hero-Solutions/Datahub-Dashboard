@@ -95,7 +95,8 @@ class ReportController extends AbstractController
                     'provider' => $this->provider,
                     'aspect' => $aspect,
                     'parameter' => $parameter,
-                    'question' => $question)
+                    'question' => $question
+                    )
                 )
             );
             if($locale === $_locale) {
