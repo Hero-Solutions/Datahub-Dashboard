@@ -307,6 +307,10 @@ h1 {
   border-color: $color6;
 }
 
+.btn {
+  font-size: 14px;
+}
+
 .select-provider > ul {
   width: 100%;
 }
@@ -568,6 +572,15 @@ button:focus {
   float: right;
   right: 6px;
   margin-top: 8px;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
 }
 
 .left-menu button[aria-expanded='false'] > .caret {
