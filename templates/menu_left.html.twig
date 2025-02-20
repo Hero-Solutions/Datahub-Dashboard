@@ -33,17 +33,15 @@
                     <div id="collapse{{ index }}" class="collapse {% if is_active_parameter %}show{% endif %}"
                          aria-labelledby="heading{{ index }}" data-bs-parent="#accordion{{ index }}">
                         <div class="card-body">
-                            <div class="btn-group-vertical collapse collapsed-buttons">
-
+                            <div class="btn-group-vertical collapsed-buttons">
                                 {% for question_name, question in parameter.questions %}
                                     {% set is_active_question = (is_active_parameter and question.url == active_question) ? 1 : 0 %}
 
-                                    <a href="{{ route ~ "/" ~ aspect_url ~ "/" ~ parameter.url ~ "/" ~ question.url }}"
+                                    <a href="{{ route ~ '/' ~ aspect_url ~ '/' ~ parameter.url ~ '/' ~ question.url }}"
                                        class="btn btn-default not-rounded collapsed-button question {% if is_active_question %}question-active{% endif %}">
                                         {{ question.label|trans }}
                                     </a>
                                 {% endfor %}
-
                             </div>
                         </div>
                     </div>
