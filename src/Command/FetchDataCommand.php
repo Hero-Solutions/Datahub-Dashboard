@@ -281,8 +281,8 @@ class FetchDataCommand extends Command
 
     private function generateAndStoreReport($dataDef, $providers, $recordIds)
     {
-        $this->documentManager->getDocumentCollection(CompletenessReport::class)->remove([]);
-        $this->documentManager->getDocumentCollection(FieldReport::class)->remove([]);
+        $this->documentManager->getDocumentCollection(CompletenessReport::class)->deleteMany([]);
+        $this->documentManager->getDocumentCollection(FieldReport::class)->deleteMany([]);
         $this->documentManager->flush();
         $this->documentManager->clear();
 
