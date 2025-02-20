@@ -14,7 +14,7 @@ class CompletenessTrend
     #[ODM\Field(type: "string")]
     private string $provider;
 
-    #[ODM\Field(type: "date")]
+    #[ODM\Field(type: "date_immutable")]
     private DateTimeImmutable $timestamp;
 
     #[ODM\Field(type: "int")]
