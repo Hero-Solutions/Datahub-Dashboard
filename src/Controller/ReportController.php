@@ -86,12 +86,23 @@ class ReportController extends AbstractController
         $route = $this->generateUrl('report', compact('_locale', 'provider'));
         $download = $this->generateUrl('download', compact('_locale', 'provider'));
 
-        // Vertaalde routes genereren
-        $translatedRoutes = array_map(fn($locale) => [
-            'locale' => $locale,
-            'route' => $this->generateUrl('report', compact('locale', 'provider', 'aspect', 'parameter', 'question')),
-            'active' => $locale === $_locale
-        ], $this->locales);
+        $translatedRoutes = array();
+        foreach($this->locales as $locale) {
+            $translatedRoute = array(
+                'locale'=> $locale,
+                'route' => $this->generateUrl('report', array(
+                    '_locale' => $locale,
+                    'provider' => $this->provider,
+                    'aspect' => $aspect,
+                    'parameter' => $parameter,
+                    'question' => $question)
+                )
+            );
+            if($locale === $_locale) {
+                $translatedRoute['active'] = true;
+            }
+            $translatedRoutes[] = $translatedRoute;
+        }
 
         // Ophalen van de juiste functie uit de configuratie
         $functionCall = null;
