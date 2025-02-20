@@ -93,9 +93,7 @@ class FetchDataCommand extends Command
                 if(array_key_exists('provider', $fetchedData)) {
                     if(count($fetchedData['provider']) > 0) {
                         $providerId = $fetchedData['provider'][0];
-                        $record = new Record();
-                        $record->setProvider($providerId);
-                        $record->setData($fetchedData);
+                        $record = new Record($providerId, $fetchedData);
                         $this->documentManager->persist($record);
 
                         if (!array_key_exists($providerId, $recordIds)) {
