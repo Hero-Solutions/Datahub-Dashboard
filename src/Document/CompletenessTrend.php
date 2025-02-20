@@ -2,6 +2,7 @@
 
 namespace App\Document;
 
+use DateTimeImmutable;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 #[ODM\Document(collection: "trends_completeness")]
@@ -14,7 +15,7 @@ class CompletenessTrend
     private string $provider;
 
     #[ODM\Field(type: "date")]
-    private \DateTimeImmutable $timestamp;
+    private DateTimeImmutable $timestamp;
 
     #[ODM\Field(type: "int")]
     private int $total = 0;
@@ -37,7 +38,7 @@ class CompletenessTrend
     public function __construct(string $provider)
     {
         $this->provider = $provider;
-        $this->timestamp = new \DateTimeImmutable();
+        $this->timestamp = new DateTimeImmutable();
     }
 
     public function getId(): ?string
@@ -55,12 +56,12 @@ class CompletenessTrend
         $this->provider = $provider;
     }
 
-    public function getTimestamp(): \DateTimeImmutable
+    public function getTimestamp(): DateTimeImmutable
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(\DateTimeImmutable $timestamp): void
+    public function setTimestamp(DateTimeImmutable $timestamp): void
     {
         $this->timestamp = $timestamp;
     }

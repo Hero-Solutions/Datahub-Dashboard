@@ -2,6 +2,7 @@
 
 namespace App\Document;
 
+use DateTimeImmutable;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 #[ODM\Document(collection: "trends_field")]
@@ -14,15 +15,15 @@ class FieldTrend
     private string $provider;
 
     #[ODM\Field(type: "date")]
-    private \DateTimeImmutable $timestamp;
+    private DateTimeImmutable $timestamp;
 
     #[ODM\Field(type: "hash")]
     private array $counts = [];
 
-    public function __construct(string $provider, ?\DateTimeImmutable $timestamp = null, array $counts = [])
+    public function __construct(string $provider, ?DateTimeImmutable $timestamp = null, array $counts = [])
     {
         $this->provider = $provider;
-        $this->timestamp = $timestamp ?? new \DateTimeImmutable();
+        $this->timestamp = $timestamp ?? new DateTimeImmutable();
         $this->counts = $counts;
     }
 
@@ -41,12 +42,12 @@ class FieldTrend
         $this->provider = $provider;
     }
 
-    public function getTimestamp(): \DateTimeImmutable
+    public function getTimestamp(): DateTimeImmutable
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(\DateTimeImmutable $timestamp): void
+    public function setTimestamp(DateTimeImmutable $timestamp): void
     {
         $this->timestamp = $timestamp;
     }

@@ -11,6 +11,8 @@ use App\Document\Record;
 use App\Entity\Graph;
 use App\Entity\Report;
 use App\Util\RecordUtil;
+use DateTimeImmutable;
+use DateTimeZone;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\UTCDateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -197,10 +199,8 @@ class ReportController extends AbstractController
     {
         $maxMonths = $this->getParameter('trends.max_history_months');
 
-        $curTime = new UTCDateTime();
-        $curTs = $curTime->toDateTime()->getTimestamp() * 1000;
-
-        $startTime = new UTCDateTime($curTs - $maxMonths * 30 * 24 * 3600 * 1000);
+        $curTime = new DateTimeImmutable();
+        $startTime = $curTime->modify("-{$maxMonths} months");
 
         return $this->documentManager->getRepository($repository)->findBy([
             'provider' => $this->provider,
@@ -210,7 +210,6 @@ class ReportController extends AbstractController
             ]
         ]);
     }
-
 
     private function generateCompletenessTrendGraph($isMinimum, $isBasic, $header)
     {
