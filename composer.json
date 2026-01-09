@@ -10,16 +10,16 @@
         "ext-mongodb": "*",
         "caseyamcl/phpoaipmh": "^3.3",
         "doctrine/mongodb-odm-bundle": "*",
-        "symfony/asset": "7.1.*",
-        "symfony/console": "7.1.*",
-        "symfony/dotenv": "7.1.*",
+        "symfony/asset": "7.4.*",
+        "symfony/console": "7.4.*",
+        "symfony/dotenv": "7.4.*",
         "symfony/flex": "^2",
-        "symfony/framework-bundle": "7.1.*",
-        "symfony/runtime": "7.1.*",
-        "symfony/translation": "7.1.*",
-        "symfony/twig-bundle": "7.1.*",
+        "symfony/framework-bundle": "7.4.*",
+        "symfony/runtime": "7.4.*",
+        "symfony/translation": "7.4.*",
+        "symfony/twig-bundle": "7.4.*",
         "symfony/webpack-encore-bundle": "^2.2",
-        "symfony/yaml": "7.1.*"
+        "symfony/yaml": "7.4.*"
     },
     "config": {
         "allow-plugins": {
@@ -67,7 +67,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.1.*",
+            "require": "7.4.*",
             "docker": false
         }
     }
