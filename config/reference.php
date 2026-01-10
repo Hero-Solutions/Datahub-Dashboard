@@ -791,7 +791,65 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             wTimeoutMS?: int|Param,
  *         },
  *         driver_options?: array{
- *             context?: scalar|null|Param, // Default: null
+ *             context?: scalar|null|Param, // Deprecated: The "context" driver option is deprecated and will be removed in 3.0. This option is ignored by the MongoDB driver version 2. // Default: null
+ *         },
+ *         autoEncryption?: array{
+ *             bypassAutoEncryption?: bool|Param,
+ *             keyVaultClient?: scalar|null|Param,
+ *             keyVaultNamespace?: scalar|null|Param,
+ *             masterKey?: list<mixed>,
+ *             kmsProvider: array{
+ *                 type: scalar|null|Param,
+ *                 accessKeyId?: scalar|null|Param,
+ *                 secretAccessKey?: scalar|null|Param,
+ *                 sessionToken?: scalar|null|Param,
+ *                 tenantId?: scalar|null|Param,
+ *                 clientId?: scalar|null|Param,
+ *                 clientSecret?: scalar|null|Param,
+ *                 keyVaultEndpoint?: scalar|null|Param,
+ *                 identityPlatformEndpoint?: scalar|null|Param,
+ *                 keyName?: scalar|null|Param,
+ *                 keyVersion?: scalar|null|Param,
+ *                 email?: scalar|null|Param,
+ *                 privateKey?: scalar|null|Param,
+ *                 endpoint?: scalar|null|Param,
+ *                 projectId?: scalar|null|Param,
+ *                 location?: scalar|null|Param,
+ *                 keyRing?: scalar|null|Param,
+ *                 key?: scalar|null|Param,
+ *             },
+ *             schemaMap?: list<mixed>,
+ *             encryptedFieldsMap?: array<string, array{ // Default: []
+ *                 fields?: list<array{ // Default: []
+ *                     path: scalar|null|Param,
+ *                     bsonType: scalar|null|Param,
+ *                     keyId: mixed,
+ *                     queries?: array{
+ *                         queryType: scalar|null|Param,
+ *                         min?: mixed,
+ *                         max?: mixed,
+ *                         sparsity?: int|Param,
+ *                         precision?: int|Param,
+ *                         trimFactor?: int|Param,
+ *                         contention?: int|Param,
+ *                     },
+ *                 }>,
+ *             }>,
+ *             extraOptions?: array{
+ *                 mongocryptdURI?: scalar|null|Param,
+ *                 mongocryptdBypassSpawn?: bool|Param,
+ *                 mongocryptdSpawnPath?: scalar|null|Param,
+ *                 mongocryptdSpawnArgs?: list<scalar|null|Param>,
+ *                 cryptSharedLibPath?: scalar|null|Param,
+ *                 cryptSharedLibRequired?: bool|Param,
+ *             },
+ *             bypassQueryAnalysis?: bool|Param,
+ *             tlsOptions?: array{
+ *                 tlsCAFile?: scalar|null|Param,
+ *                 tlsCertificateKeyFile?: scalar|null|Param,
+ *                 tlsCertificateKeyFilePassword?: scalar|null|Param,
+ *                 tlsDisableOCSPEndpointCheck?: bool|Param,
+ *             },
  *         },
  *     }>,
  *     resolve_target_documents?: array<string, scalar|null|Param>,
@@ -800,7 +858,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     }>,
  *     proxy_namespace?: scalar|null|Param, // Default: "MongoDBODMProxies"
  *     proxy_dir?: scalar|null|Param, // Default: "%kernel.cache_dir%/doctrine/odm/mongodb/Proxies"
- *     enable_lazy_ghost_objects?: bool|Param, // Default: true
+ *     enable_native_lazy_objects?: bool|Param, // Deprecated: The "enable_native_lazy_objects" option is deprecated and will be removed in 6.0. Native Lazy Objects are enable by default when using PHP 8.4+ and doctrine/mongodb-odm 2.14+. // Requires PHP 8.4+ and doctrine/mongodb-odm 2.14+ // Default: true
+ *     enable_lazy_ghost_objects?: bool|Param, // Deprecated: The "enable_lazy_ghost_objects" option is deprecated and will be removed in 6.0. Native Lazy Objects are enable by default when using PHP 8.4+ and doctrine/mongodb-odm 2.14+. // Requires doctrine/mongodb-odm 2.12+ // Default: true
  *     auto_generate_proxy_classes?: scalar|null|Param, // Default: 3
  *     hydrator_namespace?: scalar|null|Param, // Default: "Hydrators"
  *     hydrator_dir?: scalar|null|Param, // Default: "%kernel.cache_dir%/doctrine/odm/mongodb/Hydrators"
@@ -840,7 +899,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     twig?: TwigConfig,
  *     doctrine_mongodb?: DoctrineMongodbConfig,
  *     webpack_encore?: WebpackEncoreConfig,
- *     "when@dev"?: array{
+ *     "when@prod"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
  *         services?: ServicesConfig,
@@ -849,7 +908,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         doctrine_mongodb?: DoctrineMongodbConfig,
  *         webpack_encore?: WebpackEncoreConfig,
  *     },
- *     "when@prod"?: array{
+ *     "when@production"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
  *         services?: ServicesConfig,
@@ -946,8 +1005,8 @@ namespace Symfony\Component\Routing\Loader\Configurator;
  *     deprecated?: array{package:string, version:string, message?:string},
  * }
  * @psalm-type RoutesConfig = array{
- *     "when@dev"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
  *     "when@prod"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
+ *     "when@production"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
  *     "when@test"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
  *     ...<string, RouteConfig|ImportConfig|AliasConfig>
  * }
